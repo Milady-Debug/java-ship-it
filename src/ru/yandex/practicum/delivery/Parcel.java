@@ -10,6 +10,13 @@ public abstract class Parcel {
     public static final int PERISHABLE_BASE_COST = 3;
     public static final int FRAGILE_BASE_COST = 4;
 
+    public Parcel(String description, int weight, String deliveryAddress, int sendDay) {
+        this.description = description;
+        this.weight = weight;
+        this.deliveryAddress = deliveryAddress;
+        this.sendDay = sendDay;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -26,12 +33,7 @@ public abstract class Parcel {
         return deliveryAddress;
     }
 
-    public Parcel(String description, int weight, String deliveryAddress, int sendDay) {
-        this.description = description;
-        this.weight = weight;
-        this.deliveryAddress = deliveryAddress;
-        this.sendDay = sendDay;
-    }
+
 
     protected void printPackageMessage() {
         System.out.println("Посылка <<" + description + ">> упакована");
