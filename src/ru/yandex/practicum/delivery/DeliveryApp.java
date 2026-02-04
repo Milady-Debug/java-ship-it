@@ -34,6 +34,7 @@ public class DeliveryApp {
         }
     }
 
+
     private static void showMenu() {
         System.out.println("Выберите действие:");
         System.out.println("1 — Добавить посылку");
@@ -45,16 +46,84 @@ public class DeliveryApp {
     // реализуйте методы ниже
 
     private static void addParcel() {
-        // Подсказка: спросите тип посылки и необходимые поля, создайте объект и добавьте в allParcels
+
+        System.out.println("Укажите тип посылки: " +
+                "1 - стандартная посылка; " +
+                "2 - хрупкая посылка; " +
+                "3 - скоропортящаяся посылка.");
+        int choiceOfType = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Введите описание посылки: ");
+        String description = scanner.nextLine();
+
+        System.out.print("Введите вес посылки (целое число): ");
+        int weight = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Введите адрес доставки: ");
+        String address = scanner.nextLine();
+
+        System.out.print("Введите день отправки (число месяца): ");
+        int sendDay = Integer.parseInt(scanner.nextLine());
+
+        Parcel parcel = null;
+        switch (choiceOfType) {
+            case 1:
+                parcel = new StandardParcel(description, weight, address, sendDay);
+                break;
+            case 2:
+                parcel = new FragileParcel(description, weight, address, sendDay);
+                break;
+            case 3:
+                System.out.print("Введите срок годности (в днях): ");
+                int timeToLive = Integer.parseInt(scanner.nextLine());
+                parcel = new PerishableParcel(description, weight, address, sendDay, timeToLive);
+                break;
+            default:
+                System.out.println("Такого типа нет.");
+                return;
+        }
+        allParcels.add(parcel);
+        System.out.println("Посылка успешно добавлена!");
+
     }
 
     private static void sendParcels() {
-        // Пройти по allParcels, вызвать packageItem() и deliver()
+        if (allParcels.isEmpty()) {
+            System.out.println("Нет посылок для отправки.");
+            return;
+        }
+
+        System.out.print("Введите текущий день месяца: ");
+        int currentDay = Integer.parseInt(scanner.nextLine());
+
+        for (Parcel parcel : allParcels) {
+            parcel.packageItem();
+            if (parcel instanceof PerishableParcel) { //Если учитывать, что содержимое помылки испортилось
+                PerishableParcel perishable = (PerishableParcel) parcel;
+                if (perishable.isExpired(currentDay)) {
+                    System.out.println("Посылка испортилась и не может быть отправлена!");
+                    continue;
+                } else {
+                    System.out.println("Можно отправлять.");
+                }
+            }
+            System.out.println("Доставка.");
+            parcel.deliver();
+        }
     }
 
     private static void calculateCosts() {
-        // Посчитать общую стоимость всех доставок и вывести на экран
+
+        if (allParcels.isEmpty()) {
+            System.out.println("Нет посылок для расчета.");
+            return;
+        }
+        int totalCost = 0;
+        for (Parcel parcel : allParcels) {
+            int cost = parcel.calculateDeliveryCost();
+            totalCost += cost;
+        }
+        System.out.println("Общая стоимость доставки всех посылок: " + totalCost + " руб.");
     }
 
 }
-
