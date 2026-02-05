@@ -34,7 +34,6 @@ public abstract class Parcel {
     }
 
 
-
     protected void printPackageMessage() {
         System.out.println("Посылка <<" + description + ">> упакована");
     }

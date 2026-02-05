@@ -8,6 +8,7 @@ public class DeliveryApp {
 
     private static final Scanner scanner = new Scanner(System.in);
     private static List<Parcel> allParcels = new ArrayList<>();
+    private static List<Trackable> trackableParcels = new ArrayList<>();
 
     public static void main(String[] args) {
         boolean running = true;
@@ -25,6 +26,9 @@ public class DeliveryApp {
                 case 3:
                     calculateCosts();
                     break;
+                case 4:
+                    trackParcels();
+                    break;
                 case 0:
                     running = false;
                     break;
@@ -40,6 +44,7 @@ public class DeliveryApp {
         System.out.println("1 — Добавить посылку");
         System.out.println("2 — Отправить все посылки");
         System.out.println("3 — Посчитать стоимость доставки");
+        System.out.println("4 — Изменить адрес доставки(для хрупких)");
         System.out.println("0 — Завершить");
     }
 
@@ -72,6 +77,7 @@ public class DeliveryApp {
                 break;
             case 2:
                 parcel = new FragileParcel(description, weight, address, sendDay);
+                trackableParcels.add((Trackable) parcel);
                 break;
             case 3:
                 System.out.print("Введите срок годности (в днях): ");
@@ -126,4 +132,16 @@ public class DeliveryApp {
         System.out.println("Общая стоимость доставки всех посылок: " + totalCost + " руб.");
     }
 
+    private static void trackParcels(){
+        if(trackableParcels.isEmpty()){
+            System.out.println("Нет посылок, поддерживающих трекинг.");
+            return;
+        }
+        System.out.print("Введите новое местоположение посылок: ");
+        String newLocation = scanner.nextLine();
+
+        for (Trackable trackable : trackableParcels) {
+            trackable.reportStatus(newLocation);
+        }
+    }
 }
