@@ -90,19 +90,17 @@ public class DeliveryApp {
                 }
                 standardParcelBox.addParcel(standardParcel);
                 allParcels.add(parcel);
-                System.out.println("Посылка успешно добавлена!");
                 break;
             case 2:
                 FragileParcel fragileParcel = new FragileParcel(description, weight, address, sendDay);
                 parcel = fragileParcel;
-                fragileParcelBox.addParcel(fragileParcel);
                 if(fragileParcelBox.getTotalWeight() + parcel.getWeight() > fragileParcelBox.getMaxWeight()) {
                     System.out.println("Превышен максимальный вес коробки");
                     return;
                 }
+                fragileParcelBox.addParcel(fragileParcel);
                 trackableParcels.add(fragileParcel);
                 allParcels.add(parcel);
-                System.out.println("Посылка успешно добавлена!");
                 break;
             case 3:
                 System.out.print("Введите срок годности (в днях): ");
@@ -117,7 +115,6 @@ public class DeliveryApp {
                 }
                 perishableParcelBox.addParcel(perishableParcel);
                 allParcels.add(parcel);
-                System.out.println("Посылка успешно добавлена!");
                 break;
             default:
                 System.out.println("Такого типа нет.");
