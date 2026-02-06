@@ -23,7 +23,8 @@ public class AddedParcelTest {
     @Test
     void testAddParcel_WithinWeightLimit() {
         // Стандартный сценарий: добавление посылки в пустую коробку
-        StandardParcel parcel1 = new StandardParcel("Книги", 3, "ул. Ленина, 10", 15);
+        StandardParcel parcel1 = new StandardParcel("Книги", 3,
+                "ул. Ленина, 10", 15);
         standardParcelBox.addParcel(parcel1);
         assertEquals(1, standardParcelBox.getAllParcels().size());
         assertEquals(3, standardParcelBox.getTotalWeight());

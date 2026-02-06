@@ -6,9 +6,21 @@ public abstract class Parcel {
     private String deliveryAddress;
     private int sendDay;
 
-    public static final int STANDARD_BASE_COST = 2;
-    public static final int PERISHABLE_BASE_COST = 3;
-    public static final int FRAGILE_BASE_COST = 4;
+    private static final int STANDARD_BASE_COST = 2;
+    private static final int PERISHABLE_BASE_COST = 3;
+    private static final int FRAGILE_BASE_COST = 4;
+
+    public int getStandardBaseCost(){
+        return STANDARD_BASE_COST;
+    }
+
+    public int getPerishableBaseCost(){
+        return PERISHABLE_BASE_COST;
+    }
+
+    public int getFragileBaseCost(){
+        return FRAGILE_BASE_COST;
+    }
 
     public Parcel(String description, int weight, String deliveryAddress, int sendDay) {
         this.description = description;

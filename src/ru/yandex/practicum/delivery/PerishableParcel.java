@@ -5,7 +5,7 @@ public class PerishableParcel extends Parcel{
 
     @Override
     public int calculateDeliveryCost() {
-        return getWeight() * PERISHABLE_BASE_COST;
+        return getWeight() * getPerishableBaseCost();
     }
 
     @Override
